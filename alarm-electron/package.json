@@ -1,0 +1,39 @@
+{
+  "name": "alarm",
+  "productName": "Alarm",
+  "version": "1.0.0",
+  "description": "Desktop alarm clock (Electron, event-driven multi-process, MVU UI without a framework)",
+  "private": true,
+  "type": "module",
+  "main": "src/shell/main.js",
+  "author": { "name": "Alarm", "email": "alarm@example.com" },
+  "homepage": "https://example.com/alarm",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "gallery": "ALARM_GALLERY=1 electron .",
+    "gen:validators": "node scripts/gen-validators.js",
+    "check": "node scripts/gen-validators.js --check && tsc -p jsconfig.json && depcruise src --config .dependency-cruiser.cjs && eslint . && prettier --check \"src/**/*.{js,css,html}\" \"test/**/*.js\" && node --test \"test/domain/**/*.test.js\" \"test/engine/**/*.test.js\" \"test/contract/**/*.test.js\" \"test/ui/**/*.test.js\"",
+    "test:unit": "node --test \"test/domain/**/*.test.js\" \"test/engine/**/*.test.js\" \"test/contract/**/*.test.js\" \"test/ui/**/*.test.js\"",
+    "test:e2e": "playwright test",
+    "icons": "electron scripts/make-icons.cjs",
+    "dist": "electron-builder --config electron-builder.config.cjs --mac --win --linux",
+    "dist:mac": "electron-builder --config electron-builder.config.cjs --mac"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^24.19.2",
+    "@types/pngjs": "^6.0.5",
+    "ajv": "^8.20.0",
+    "dependency-cruiser": "^18.7.2",
+    "electron": "^45.3.0",
+    "electron-builder": "^26.18.0",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3"
+  }
+}

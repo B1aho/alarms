@@ -1,0 +1,276 @@
+@import 'tailwindcss';
+
+/* Apple Human Interface colour tokens. Dark is the iOS Clock look; light follows system colours. */
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme inline {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', 'Segoe UI Variable Text',
+    'Segoe UI', Inter, system-ui, sans-serif;
+  --font-display:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'Segoe UI Variable Display', 'Segoe UI',
+    Inter, system-ui, sans-serif;
+  --font-rounded: ui-rounded, 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  --color-bg: var(--ios-bg);
+  --color-cell: var(--ios-cell);
+  --color-cell-hover: var(--ios-cell-hover);
+  --color-fill: var(--ios-fill);
+  --color-fill-2: var(--ios-fill-2);
+  --color-thumb: var(--ios-thumb);
+  --color-separator: var(--ios-separator);
+  --color-label: var(--ios-label);
+  --color-label-2: var(--ios-label-2);
+  --color-label-3: var(--ios-label-3);
+  --color-material: var(--ios-material);
+  --color-accent: var(--ios-orange);
+  --color-ios-orange: var(--ios-orange);
+  --color-ios-green: var(--ios-green);
+  --color-ios-red: var(--ios-red);
+  --color-ios-blue: var(--ios-blue);
+  --color-ios-indigo: var(--ios-indigo);
+  --color-ios-teal: var(--ios-teal);
+}
+
+:root {
+  --ios-bg: #f2f2f7;
+  --ios-cell: #ffffff;
+  --ios-cell-hover: #e5e5ea;
+  --ios-fill: rgba(120, 120, 128, 0.2);
+  --ios-fill-2: rgba(118, 118, 128, 0.12);
+  --ios-thumb: #ffffff;
+  --ios-separator: rgba(60, 60, 67, 0.29);
+  --ios-label: #000000;
+  --ios-label-2: rgba(60, 60, 67, 0.6);
+  --ios-label-3: rgba(60, 60, 67, 0.3);
+  --ios-material: rgba(246, 246, 246, 0.78);
+  --ios-orange: #ff9500;
+  --ios-green: #34c759;
+  --ios-red: #ff3b30;
+  --ios-blue: #007aff;
+  --ios-indigo: #5856d6;
+  --ios-teal: #30b0c7;
+  --ios-switch-off: #e9e9ea;
+  --ios-shadow: 0 3px 8px rgba(0, 0, 0, 0.12), 0 3px 1px rgba(0, 0, 0, 0.04);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --ios-bg: #000000;
+  --ios-cell: #1c1c1e;
+  --ios-cell-hover: #2c2c2e;
+  --ios-fill: rgba(120, 120, 128, 0.36);
+  --ios-fill-2: rgba(118, 118, 128, 0.24);
+  --ios-thumb: #636366;
+  --ios-separator: rgba(84, 84, 88, 0.65);
+  --ios-label: #ffffff;
+  --ios-label-2: rgba(235, 235, 245, 0.6);
+  --ios-label-3: rgba(235, 235, 245, 0.3);
+  --ios-material: rgba(22, 22, 23, 0.72);
+  --ios-orange: #ff9f0a;
+  --ios-green: #30d158;
+  --ios-red: #ff453a;
+  --ios-blue: #0a84ff;
+  --ios-indigo: #5e5ce6;
+  --ios-teal: #40c8e0;
+  --ios-switch-off: #39393d;
+  --ios-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  color-scheme: dark;
+}
+
+/* Modal sheets are one elevation level up, like iOS. */
+:root[data-theme='dark'] .elevated {
+  --ios-bg: #1c1c1e;
+  --ios-cell: #2c2c2e;
+  --ios-cell-hover: #3a3a3c;
+  --ios-material: rgba(28, 28, 30, 0.85);
+}
+:root:not([data-theme='dark']) .elevated {
+  --ios-material: rgba(242, 242, 247, 0.85);
+}
+
+html,
+body {
+  background: var(--ios-bg);
+  color: var(--ios-label);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--ios-orange) 35%, transparent);
+}
+
+/* Keyboard focus ring. In the base layer so components can replace it with their own focus style.
+   Containers focused from code (tabindex=-1, e.g. a sheet) get no ring. */
+@layer base {
+  :focus-visible:not([tabindex='-1']) {
+    outline: 3px solid color-mix(in srgb, var(--ios-blue) 60%, transparent);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Grouped-list hairline separators, inset like UIKit. */
+.ios-row + .ios-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: var(--row-inset, 16px);
+  height: 0.5px;
+  background: var(--ios-separator);
+  pointer-events: none;
+}
+
+.wheel-mask {
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 32%, #000 68%, transparent 100%);
+}
+
+input[type='range'].ios-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 28px;
+  background: transparent;
+}
+input[type='range'].ios-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--ios-blue) 0,
+    var(--ios-blue) var(--fill, 50%),
+    var(--ios-fill) var(--fill, 50%)
+  );
+}
+input[type='range'].ios-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ios-fill);
+}
+input[type='range'].ios-slider::-moz-range-progress {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ios-blue);
+}
+input[type='range'].ios-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  margin-top: -12px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0.5px 4px rgba(0, 0, 0, 0.12), 0 6px 13px rgba(0, 0, 0, 0.12);
+}
+input[type='range'].ios-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0.5px 4px rgba(0, 0, 0, 0.12), 0 6px 13px rgba(0, 0, 0, 0.12);
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes push-in {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  80% {
+    transform: translateX(4px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-8px);
+  }
+  40%,
+  60% {
+    transform: translateX(8px);
+  }
+}
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+.animate-sheet-in {
+  animation: sheet-in 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.animate-fade-in {
+  animation: fade-in 0.24s ease-out;
+}
+.animate-push-in {
+  animation: push-in 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.animate-shake {
+  animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+.animate-breathe {
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

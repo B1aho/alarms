@@ -1,0 +1,15 @@
+{
+  "name": "alarm-rs-ui-web-visual",
+  "private": true,
+  "type": "module",
+  "description": "Visual tests of ui-web: the 36 reference screenshots in WebKit with a fake daemon",
+  "scripts": {
+    "fixtures": "node make-fixtures.mjs",
+    "test": "node run.mjs"
+  },
+  "dependencies": {
+    "pixelmatch": "^7.1.0",
+    "playwright": "1.65.0",
+    "pngjs": "^7.0.0"
+  }
+}

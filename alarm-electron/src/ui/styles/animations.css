@@ -1,0 +1,104 @@
+/* Animations (ALARM_SPEC §4.5). */
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes push-in {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  80% {
+    transform: translateX(4px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-8px);
+  }
+  40%,
+  60% {
+    transform: translateX(8px);
+  }
+}
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+.animate-sheet-in,
+.sheet,
+.timer-alert,
+.task-card {
+  animation: sheet-in 0.32s var(--ease-ios);
+}
+.animate-fade-in,
+.sheet-backdrop,
+.ringing,
+.banner,
+.delete-button,
+.timer-alert-layer {
+  animation: fade-in 0.24s ease-out;
+}
+.animate-push-in {
+  animation: push-in 0.3s var(--ease-ios);
+}
+.animate-shake {
+  animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+.ringing-glow {
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+/* "Reduce motion": animations practically off. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Visual tests freeze all motion. */
+html[data-test-still] *,
+html[data-test-still] *::before,
+html[data-test-still] *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  caret-color: transparent !important;
+}

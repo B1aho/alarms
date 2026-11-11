@@ -1,0 +1,27 @@
+# OS
+.DS_Store
+
+# Node (alarm, alarm-electron, alarm-rs visual tests)
+node_modules/
+dist/
+dev-dist/
+*.local
+test-results/
+playwright-report/
+
+# Rust
+/alarm-rs/target/
+/alarm-rs/crates/ui-web/dist/
+/alarm-rs/crates/ui-web/tests/visual/out/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+.import_linter_cache/
+.briefcase/
+/alarm-py/build/
+/alarm-py/tests/visual/out/

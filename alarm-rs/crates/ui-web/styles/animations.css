@@ -1,0 +1,117 @@
+/* Animations (ALARM_SPEC 4.5). */
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes push-in {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  80% {
+    transform: translateX(4px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-8px);
+  }
+  40%,
+  60% {
+    transform: translateX(8px);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+.anim-sheet-in {
+  animation: sheet-in 0.32s var(--ease-ios);
+}
+
+.anim-fade-in {
+  animation: fade-in 0.24s ease-out;
+}
+
+.anim-push-in {
+  animation: push-in 0.3s var(--ease-ios);
+}
+
+.anim-shake {
+  animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.anim-breathe {
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+/* Screenshots and tests freeze motion. */
+html.no-motion *,
+html.no-motion *::before,
+html.no-motion *::after {
+  animation-duration: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Headless WebKit (the visual tests) does not composite `backdrop-filter` into screenshots.
+   With `?shim=backdrop` the content behind an overlay is blurred with `filter` instead,
+   which gives the same picture. The app itself never sets this class. */
+html.backdrop-shim .content:has(> .sheet-wrap) > :not(.sheet-wrap),
+html.backdrop-shim .app-root:has(> .content > .sheet-wrap) > .toolbar {
+  filter: blur(var(--shim-sheet, 2px));
+}
+
+html.backdrop-shim .app-root:has(> .ringing) > :not(.ringing) {
+  filter: blur(40px);
+}
+
+html.backdrop-shim .app-root:has(> .timer-alert-wrap) > :not(.timer-alert-wrap) {
+  filter: blur(12px);
+}

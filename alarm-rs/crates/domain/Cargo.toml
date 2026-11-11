@@ -1,0 +1,22 @@
+[package]
+name = "domain"
+description = "Pure rules of the alarm clock: model, schedule, tasks, formats, texts"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+jiff = { workspace = true }
+serde = { workspace = true }
+rand_core = { workspace = true }
+
+[features]
+# Enables jiff's browser support when `domain` is compiled into the WebView (ui-web).
+js = ["jiff/js"]
+
+[dev-dependencies]
+proptest = { workspace = true }
+
+[lints]
+workspace = true

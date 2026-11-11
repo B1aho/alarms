@@ -1,0 +1,18 @@
+[package]
+name = "protocol"
+description = "The contract between alarmd and the client: JSON lines over a local socket"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+domain = { workspace = true }
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
+insta = { workspace = true }
+
+[lints]
+workspace = true

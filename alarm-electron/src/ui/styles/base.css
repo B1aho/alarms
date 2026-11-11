@@ -1,0 +1,138 @@
+/* Reset and typography (ALARM_SPEC §4.2). */
+
+/* Inter ships with the app for Linux (TZ §6, 4.1–4.3); macOS and Windows use their system fonts first. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('./fonts/Inter.woff2') format('woff2');
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  font-family: var(--font-sans);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--label);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100dvh;
+  letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3,
+p {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+svg {
+  display: block;
+  vertical-align: middle;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  background-color: transparent;
+  border-radius: 0;
+  opacity: 1;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button {
+  cursor: default;
+  -webkit-appearance: button;
+  appearance: button;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+input::placeholder {
+  opacity: 1;
+  color: var(--label-3);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--orange) 35%, transparent);
+}
+
+/* Keyboard focus ring (§4.6). Containers focused from code (tabindex=-1) get none. */
+:focus-visible:not([tabindex='-1']) {
+  outline: 3px solid color-mix(in srgb, var(--blue) 60%, transparent);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.tone-accent {
+  color: var(--accent);
+}
+.tone-red {
+  color: var(--red);
+}
+.tone-green {
+  color: var(--green);
+}
+.tone-orange {
+  color: var(--orange);
+}
+
+/* Before the engine's first snapshot arrives nothing is shown that could flash wrong data. */
+html:not([data-ready]) .content {
+  visibility: hidden;
+}

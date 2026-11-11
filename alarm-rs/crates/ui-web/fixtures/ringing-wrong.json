@@ -1,0 +1,239 @@
+{
+  "version": "1.0.0",
+  "platform": "macos",
+  "now": 1794311460000,
+  "alarms": [
+    {
+      "id": "work",
+      "hour": 6,
+      "minute": 30,
+      "label": "Work",
+      "enabled": true,
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sound": {
+        "kind": "builtin",
+        "id": "sunrise"
+      },
+      "volume": 0.9,
+      "rampSeconds": 60,
+      "snooze": true,
+      "task": {
+        "type": "math",
+        "difficulty": "medium",
+        "count": 2
+      },
+      "createdAt": 1793491200000,
+      "nextTriggerAt": 1794378600000,
+      "snoozeUntil": null,
+      "ringingSince": null
+    },
+    {
+      "id": "gym",
+      "hour": 7,
+      "minute": 15,
+      "label": "Gym",
+      "enabled": false,
+      "days": [],
+      "sound": {
+        "kind": "builtin",
+        "id": "sunrise"
+      },
+      "volume": 0.9,
+      "rampSeconds": 60,
+      "snooze": true,
+      "task": {
+        "type": "math",
+        "difficulty": "medium",
+        "count": 2
+      },
+      "createdAt": 1793491200000,
+      "nextTriggerAt": null,
+      "snoozeUntil": 1794311820000,
+      "ringingSince": null
+    },
+    {
+      "id": "weekend",
+      "hour": 9,
+      "minute": 0,
+      "label": "Weekend",
+      "enabled": false,
+      "days": [
+        0,
+        6
+      ],
+      "sound": {
+        "kind": "builtin",
+        "id": "sunrise"
+      },
+      "volume": 0.9,
+      "rampSeconds": 60,
+      "snooze": true,
+      "task": {
+        "type": "math",
+        "difficulty": "medium",
+        "count": 2
+      },
+      "createdAt": 1793491200000,
+      "nextTriggerAt": null,
+      "snoozeUntil": null,
+      "ringingSince": null
+    },
+    {
+      "id": "vitamins",
+      "hour": 22,
+      "minute": 45,
+      "label": "Take vitamins",
+      "enabled": true,
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sound": {
+        "kind": "builtin",
+        "id": "sunrise"
+      },
+      "volume": 0.9,
+      "rampSeconds": 60,
+      "snooze": true,
+      "task": {
+        "type": "math",
+        "difficulty": "medium",
+        "count": 2
+      },
+      "createdAt": 1793491200000,
+      "nextTriggerAt": 1794350700000,
+      "snoozeUntil": null,
+      "ringingSince": null
+    },
+    {
+      "id": "ring",
+      "hour": 11,
+      "minute": 51,
+      "label": "Work",
+      "enabled": false,
+      "days": [],
+      "sound": {
+        "kind": "builtin",
+        "id": "sunrise"
+      },
+      "volume": 0.9,
+      "rampSeconds": 60,
+      "snooze": true,
+      "task": {
+        "type": "math",
+        "difficulty": "medium",
+        "count": 2
+      },
+      "createdAt": 1793491200000,
+      "nextTriggerAt": null,
+      "snoozeUntil": null,
+      "ringingSince": 1794311460000
+    }
+  ],
+  "settings": {
+    "theme": "dark",
+    "hourCycle": "24h",
+    "snoozeMinutes": 9,
+    "rampSeconds": 60,
+    "volume": 0.9,
+    "defaultSound": {
+      "kind": "builtin",
+      "id": "sunrise"
+    },
+    "defaultTask": {
+      "type": "math",
+      "difficulty": "medium",
+      "count": 2
+    },
+    "keepAwake": false,
+    "missedGraceMinutes": 60,
+    "openAtLogin": true
+  },
+  "hourCycle": "24h",
+  "timer": {
+    "status": "idle",
+    "durationMs": 300000,
+    "endsAt": null,
+    "remainingMs": 0,
+    "label": "",
+    "sound": {
+      "kind": "builtin",
+      "id": "chimes"
+    },
+    "recents": []
+  },
+  "stopwatch": {
+    "startedAt": null,
+    "accumulatedMs": 0,
+    "laps": []
+  },
+  "sounds": [],
+  "ringing": [
+    {
+      "alarm": {
+        "id": "ring",
+        "hour": 11,
+        "minute": 51,
+        "label": "Work",
+        "enabled": false,
+        "days": [],
+        "sound": {
+          "kind": "builtin",
+          "id": "sunrise"
+        },
+        "volume": 0.9,
+        "rampSeconds": 60,
+        "snooze": true,
+        "task": {
+          "type": "math",
+          "difficulty": "medium",
+          "count": 2
+        },
+        "createdAt": 1793491200000,
+        "nextTriggerAt": null,
+        "snoozeUntil": null,
+        "ringingSince": 1794311460000
+      },
+      "task": {
+        "kind": "math",
+        "prompt": "6 × 19 + 59",
+        "solved": 0,
+        "total": 2,
+        "wrong": 1
+      }
+    }
+  ],
+  "notifications": "on",
+  "nextAlarmAt": 1794311820000,
+  "newAlarm": {
+    "id": null,
+    "hour": 11,
+    "minute": 51,
+    "label": "",
+    "days": [],
+    "sound": {
+      "kind": "builtin",
+      "id": "sunrise"
+    },
+    "volume": 0.9,
+    "rampSeconds": 60,
+    "snooze": true,
+    "task": {
+      "type": "math",
+      "difficulty": "medium",
+      "count": 2
+    }
+  },
+  "previewPlaying": false
+}

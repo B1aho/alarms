@@ -1,0 +1,32 @@
+# Purity rules for `domain` and `app` (TZ_RUST 5.5). Those crates turn the lints
+# into errors with `#![deny(clippy::disallowed_methods, clippy::disallowed_types)]`;
+# every other crate opts out with `allow`, because they are the I/O edge.
+disallowed-methods = [
+    { path = "std::time::SystemTime::now", reason = "time comes in through the Clock port" },
+    { path = "std::time::Instant::now", reason = "time comes in through the Clock port" },
+    { path = "jiff::Timestamp::now", reason = "time comes in through the Clock port" },
+    { path = "jiff::Zoned::now", reason = "time comes in through the Clock port" },
+    { path = "jiff::tz::TimeZone::system", reason = "the time zone comes in through the Clock port" },
+    { path = "std::thread::sleep", reason = "no blocking in the core" },
+    { path = "rand::thread_rng", reason = "randomness comes in as an argument", allow-invalid = true },
+    { path = "rand::random", reason = "randomness comes in as an argument", allow-invalid = true },
+    { path = "std::fs::read", reason = "no file I/O in the core" },
+    { path = "std::fs::read_to_string", reason = "no file I/O in the core" },
+    { path = "std::fs::write", reason = "no file I/O in the core" },
+    { path = "std::fs::copy", reason = "no file I/O in the core" },
+    { path = "std::fs::remove_file", reason = "no file I/O in the core" },
+    { path = "std::fs::create_dir_all", reason = "no file I/O in the core" },
+    { path = "std::fs::metadata", reason = "no file I/O in the core" },
+    { path = "std::fs::read_dir", reason = "no file I/O in the core" },
+    { path = "std::fs::rename", reason = "no file I/O in the core" },
+    { path = "std::env::var", reason = "configuration comes in through ports" },
+]
+disallowed-types = [
+    { path = "std::fs::File", reason = "no file I/O in the core" },
+    { path = "std::fs::OpenOptions", reason = "no file I/O in the core" },
+    { path = "std::net::TcpStream", reason = "no network in the core" },
+    { path = "std::net::TcpListener", reason = "no network in the core" },
+    { path = "std::net::UdpSocket", reason = "no network in the core" },
+    { path = "std::time::Instant", reason = "time comes in through the Clock port" },
+    { path = "std::time::SystemTime", reason = "time comes in through the Clock port" },
+]

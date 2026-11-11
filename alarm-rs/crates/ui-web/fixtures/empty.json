@@ -1,0 +1,67 @@
+{
+  "version": "1.0.0",
+  "platform": "macos",
+  "now": 1794311460000,
+  "alarms": [],
+  "settings": {
+    "theme": "dark",
+    "hourCycle": "24h",
+    "snoozeMinutes": 9,
+    "rampSeconds": 60,
+    "volume": 0.9,
+    "defaultSound": {
+      "kind": "builtin",
+      "id": "sunrise"
+    },
+    "defaultTask": {
+      "type": "math",
+      "difficulty": "medium",
+      "count": 2
+    },
+    "keepAwake": false,
+    "missedGraceMinutes": 60,
+    "openAtLogin": true
+  },
+  "hourCycle": "24h",
+  "timer": {
+    "status": "idle",
+    "durationMs": 300000,
+    "endsAt": null,
+    "remainingMs": 0,
+    "label": "",
+    "sound": {
+      "kind": "builtin",
+      "id": "chimes"
+    },
+    "recents": []
+  },
+  "stopwatch": {
+    "startedAt": null,
+    "accumulatedMs": 0,
+    "laps": []
+  },
+  "sounds": [],
+  "ringing": [],
+  "notifications": "on",
+  "nextAlarmAt": null,
+  "newAlarm": {
+    "id": null,
+    "hour": 11,
+    "minute": 51,
+    "label": "",
+    "days": [],
+    "sound": {
+      "kind": "builtin",
+      "id": "sunrise"
+    },
+    "volume": 0.9,
+    "rampSeconds": 60,
+    "snooze": true,
+    "task": {
+      "type": "math",
+      "difficulty": "medium",
+      "count": 2
+    }
+  },
+  "previewPlaying": false
+}

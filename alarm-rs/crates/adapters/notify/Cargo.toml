@@ -1,0 +1,24 @@
+[package]
+name = "notify"
+description = "System notifications with a Snooze button (Notifier port, driving adapter)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+app = { workspace = true }
+domain = { workspace = true }
+log = { workspace = true }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2 = "0.6"
+block2 = "0.6"
+objc2-foundation = { version = "0.3", features = ["NSString", "NSError", "NSBundle", "NSSet", "NSArray", "NSDictionary", "NSObject", "NSThread"] }
+objc2-user-notifications = { version = "0.3", features = ["UNUserNotificationCenter", "UNNotificationRequest", "UNNotificationContent", "UNNotificationAction", "UNNotificationCategory", "UNNotificationSettings", "UNNotificationResponse", "UNNotification", "UNNotificationTrigger", "UNNotificationSound", "block2"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+notify-rust = "4"
+
+[target.'cfg(windows)'.dependencies]
+tauri-winrt-notification = "0.7"

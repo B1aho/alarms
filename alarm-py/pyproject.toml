@@ -1,0 +1,225 @@
+[project]
+name = "alarm"
+version = "1.0.0"
+description = "Desktop alarm clock in the style of Apple Clock (Python, actors + Qt Quick)"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "PySide6>=6.8",
+    "pykka>=4.0",
+    "pydantic>=2.7",
+    "numpy>=1.26",
+    "sounddevice>=0.5",
+    "av>=12",
+    "desktop-notifier>=6.0",
+    "wakepy>=0.9",
+    "platformdirs>=4.2",
+    "pyobjc-framework-Cocoa>=10; sys_platform == 'darwin'",
+]
+
+[project.scripts]
+alarm = "alarm.__main__:main"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.6",
+    "pyright>=1.1.380",
+    "import-linter>=2.1",
+    "pytest>=8",
+    "pytest-qt>=4.4",
+    "pytest-timeout>=2.3",
+    "hypothesis>=6.100",
+    "Pillow>=10",
+    "poethepoet>=0.29",
+    "briefcase>=0.3.20",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/alarm"]
+
+# --------------------------------------------------------------- tasks --
+
+[tool.poe.tasks]
+lint = "ruff check src tests"
+format = "ruff format src tests"
+types = "pyright"
+imports = "lint-imports"
+test = "pytest -q -m 'not e2e and not visual'"
+check = ["lint", "types", "imports", "test"]
+e2e = { cmd = "pytest -q -m e2e", env = { QT_QPA_PLATFORM = "offscreen" } }
+visual = { cmd = "pytest -q -m visual", env = { QT_QPA_PLATFORM = "cocoa", ALARM_VISUAL = "1" } }
+dist = { shell = "briefcase create && briefcase build && briefcase package --adhoc-sign" }
+
+# --------------------------------------------------------------- ruff --
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "TID", "PL", "N"]
+ignore = [
+    "PLR0911", "PLR0912", "PLR0913", "PLR0915", "PLR0917", "PLR2004", "PLW0603", "PLC0415",
+    "RUF001", "RUF002", "RUF003", "N802", "N815",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["PLC0415", "N806"]
+"src/alarm/rules/**" = []
+
+# --------------------------------------------------------------- pyright --
+
+[tool.pyright]
+include = ["src", "tests"]
+typeCheckingMode = "strict"
+pythonVersion = "3.12"
+venvPath = "."
+venv = ".venv"
+extraPaths = ["."]
+reportMissingTypeStubs = false
+reportUnknownMemberType = false
+reportUnknownArgumentType = false
+reportUnknownVariableType = false
+reportUnknownParameterType = false
+reportMissingTypeArgument = false
+reportUnknownLambdaType = false
+reportPrivateUsage = false
+
+[[tool.pyright.executionEnvironments]]
+root = "tests"
+reportUnusedFunction = false
+reportAttributeAccessIssue = false
+reportOptionalMemberAccess = false
+
+# --------------------------------------------------------------- pytest --
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "e2e: end-to-end tests that launch the app process",
+    "visual: screenshot comparisons against docs/screens",
+]
+qt_api = "pyside6"
+timeout = 120
+filterwarnings = ["ignore::DeprecationWarning"]
+
+# --------------------------------------------------------------- import-linter --
+
+[tool.importlinter]
+root_package = "alarm"
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Layers: bootstrap -> ui | actors -> kernel -> messages -> rules"
+type = "layers"
+layers = [
+    "alarm.__main__",
+    "alarm.ui | alarm.actors",
+    "alarm.kernel",
+    "alarm.messages",
+    "alarm.rules",
+]
+exhaustive = false
+
+[[tool.importlinter.contracts]]
+name = "Actors are independent of each other"
+type = "independence"
+modules = [
+    "alarm.actors.clock",
+    "alarm.actors.settings",
+    "alarm.actors.alarms",
+    "alarm.actors.timer",
+    "alarm.actors.stopwatch",
+    "alarm.actors.sounds",
+    "alarm.actors.store",
+    "alarm.actors.audio",
+    "alarm.actors.notifier",
+    "alarm.actors.power",
+]
+
+[[tool.importlinter.contracts]]
+name = "Rules are pure: no UI, actor runtime, audio, notifications or power libraries"
+type = "forbidden"
+source_modules = ["alarm.rules"]
+forbidden_modules = ["PySide6", "pykka", "sounddevice", "av", "numpy", "desktop_notifier", "wakepy", "alarm.kernel", "alarm.messages", "alarm.actors", "alarm.ui"]
+
+[[tool.importlinter.contracts]]
+name = "Messages speak only in rules.models"
+type = "forbidden"
+source_modules = ["alarm.messages"]
+forbidden_modules = ["PySide6", "pykka", "sounddevice", "av", "numpy", "desktop_notifier", "wakepy", "alarm.kernel", "alarm.actors", "alarm.ui"]
+
+[[tool.importlinter.contracts]]
+name = "Kernel depends only on pykka and stdlib"
+type = "forbidden"
+source_modules = ["alarm.kernel"]
+forbidden_modules = ["PySide6", "sounddevice", "av", "numpy", "desktop_notifier", "wakepy", "pydantic", "alarm.actors", "alarm.ui", "alarm.messages", "alarm.rules"]
+
+[[tool.importlinter.contracts]]
+name = "UI never imports actors or their libraries"
+type = "forbidden"
+source_modules = ["alarm.ui"]
+forbidden_modules = ["alarm.actors", "pykka", "sounddevice", "av", "desktop_notifier", "wakepy"]
+# The UI imports kernel (tell, registry), which itself runs on pykka: only direct imports count here.
+allow_indirect_imports = true
+
+[[tool.importlinter.contracts]]
+name = "Actors never import the UI toolkit"
+type = "forbidden"
+source_modules = ["alarm.actors"]
+forbidden_modules = ["PySide6", "alarm.ui"]
+
+# --------------------------------------------------------------- briefcase --
+
+[tool.briefcase]
+project_name = "Alarm"
+bundle = "org.alarmclock"
+version = "1.0.0"
+url = "https://example.invalid/alarm"
+license.file = "LICENSE"
+author = "Alarm"
+author_email = "alarm@example.invalid"
+
+[tool.briefcase.app.alarm]
+formal_name = "Alarm"
+description = "Desktop alarm clock"
+long_description = "A desktop alarm clock in the style of Apple Clock that rings even when its window is closed."
+sources = ["src/alarm"]
+icon = "resources/icon/alarm"
+requires = [
+    "PySide6-Essentials>=6.8",
+    "PySide6-Addons>=6.8",
+    "pykka>=4.0",
+    "pydantic>=2.7",
+    "numpy>=1.26",
+    "sounddevice>=0.5",
+    "av>=12",
+    "desktop-notifier>=6.0",
+    "wakepy>=0.9",
+    "platformdirs>=4.2",
+]
+
+[tool.briefcase.app.alarm.macOS]
+universal_build = false
+min_os_version = "13.0"
+requires = ["pyobjc-framework-Cocoa>=10", "std-nslog~=1.0.3"]
+info."LSUIElement" = false
+info."NSUserNotificationAlertStyle" = "alert"
+
+[tool.briefcase.app.alarm.linux]
+requires = []
+system_requires = ["libportaudio2"]
+
+[tool.briefcase.app.alarm.linux.system.debian]
+system_runtime_requires = ["libportaudio2", "libxkbcommon-x11-0", "libxcb-cursor0", "libegl1"]
+
+[tool.briefcase.app.alarm.linux.system.rhel]
+system_runtime_requires = ["portaudio", "libxkbcommon-x11", "xcb-util-cursor", "mesa-libEGL"]
+
+[tool.briefcase.app.alarm.windows]
+requires = []

@@ -1,0 +1,81 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/domain",
+    "crates/app",
+    "crates/protocol",
+    "crates/ui-web",
+    "crates/adapters/store-sqlite",
+    "crates/adapters/audio-rodio",
+    "crates/adapters/notify",
+    "crates/adapters/power",
+    "crates/adapters/login",
+    "crates/adapters/sysinfo",
+    "crates/adapters/ipc-server",
+    "crates/adapters/tray",
+    "crates/adapters/ui-launcher",
+    "bins/alarmd",
+    "bins/alarm-ui",
+    "xtask",
+]
+default-members = [
+    "crates/domain",
+    "crates/app",
+    "crates/protocol",
+    "crates/adapters/store-sqlite",
+    "crates/adapters/audio-rodio",
+    "crates/adapters/notify",
+    "crates/adapters/power",
+    "crates/adapters/login",
+    "crates/adapters/sysinfo",
+    "crates/adapters/ipc-server",
+    "crates/adapters/tray",
+    "crates/adapters/ui-launcher",
+    "bins/alarmd",
+    "bins/alarm-ui",
+]
+
+[workspace.package]
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT"
+publish = false
+
+[workspace.dependencies]
+domain = { path = "crates/domain" }
+app = { path = "crates/app" }
+protocol = { path = "crates/protocol" }
+store-sqlite = { path = "crates/adapters/store-sqlite" }
+audio-rodio = { path = "crates/adapters/audio-rodio" }
+notify = { path = "crates/adapters/notify" }
+power = { path = "crates/adapters/power" }
+login = { path = "crates/adapters/login" }
+sysinfo = { path = "crates/adapters/sysinfo" }
+ipc-server = { path = "crates/adapters/ipc-server" }
+tray = { path = "crates/adapters/tray" }
+ui-launcher = { path = "crates/adapters/ui-launcher" }
+
+jiff = { version = "0.2", default-features = false, features = ["std", "tz-system", "tzdb-bundle-platform", "tzdb-zoneinfo"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rand_core = "0.6"
+rand = "0.8"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time", "io-util", "signal"] }
+interprocess = { version = "2", features = ["tokio"] }
+directories = "6"
+log = "0.4"
+env_logger = "0.11"
+insta = { version = "1", features = ["json"] }
+proptest = "1"
+tempfile = "3"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[profile.dev.package."*"]
+opt-level = 2
+
+[profile.release]
+lto = "thin"
+codegen-units = 4

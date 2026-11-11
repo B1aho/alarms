@@ -1,0 +1,9 @@
+# rules/ are pure (TZ 5.7): time and randomness are arguments, never ambient.
+extend = "../../../pyproject.toml"
+
+[lint.flake8-tidy-imports.banned-api]
+"datetime.datetime.now".msg = "rules/ are pure: pass `now` in"
+"datetime.date.today".msg = "rules/ are pure: pass `now` in"
+"time.time".msg = "rules/ are pure: pass `now` in"
+"time.monotonic".msg = "rules/ are pure: pass `now` in"
+"random".msg = "rules/ are pure: pass a random source in"

@@ -1,0 +1,14 @@
+[package]
+name = "tray"
+description = "Tray / menu bar icon (driving adapter, TrayMenu port)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+app = { workspace = true }
+domain = { workspace = true }
+tray-icon = "0.21"
+tao = "0.34"
+log = { workspace = true }
