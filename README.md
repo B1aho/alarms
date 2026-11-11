@@ -11,7 +11,13 @@
 | [`alarm-rs/`](alarm-rs/) | Rust: демон + Tauri и Leptos | порты и адаптеры, отдельный демон; клиент — тонкий, на реактивных сигналах Leptos | да |
 | [`alarm-py/`](alarm-py/) | Python + Qt Quick (PySide6) | акторы с супервизором, один процесс; клиент — MVVM (QML + ViewModel) | да |
 
-Все команды ниже запускаются из этой папки (`alarms/`).
+Склонировать репозиторий и перейти в него:
+
+```bash
+git clone https://github.com/B1aho/alarms.git && cd alarms
+```
+
+Все команды ниже запускаются из корня репозитория.
 
 ---
 
